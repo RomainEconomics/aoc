@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "types": ["bun-types"], // this is necessary
+    "target": "es2017",
+    "module": "es2022",
+  },
+  "include": ["./**/*"],
+  "exclude": ["node_modules"]
+}
