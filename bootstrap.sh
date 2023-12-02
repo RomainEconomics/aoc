@@ -98,8 +98,8 @@ END
 
 
 
-mkdir 2024
-cd 2024
+mkdir $1
+cd $1
 
 for i in {01..25}; do
     
