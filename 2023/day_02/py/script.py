@@ -1,7 +1,6 @@
 
 from functools import reduce
 import pathlib
-import re
 
 
 path = pathlib.Path(__file__)
@@ -12,8 +11,7 @@ DATA = DATA_FOLDER / "input.txt"
 
 def read_file(file_path: pathlib.Path):
     with open(file_path) as f:
-        data = f.read().splitlines()
-        return data 
+        return f.read().splitlines() 
 
 max_bag = {
     "red": 12,
@@ -38,7 +36,7 @@ def check_game(line):
 def part1(data_path: pathlib.Path):
     data = read_file(data_path)
 
-    return sum([check_game(i) for i in data])
+    return sum(check_game(i) for i in data)
 
 answer_test = part1(DATA_TEST) == 8
 answer = part1(DATA) == 1734
@@ -64,7 +62,7 @@ def line_power(line: str):
 def part2(data_path: pathlib.Path):
     data = read_file(data_path)
 
-    return sum([line_power(i) for i in data])
+    return sum(line_power(i) for i in data)
 
 
 answer_test = part2(DATA_TEST) == 2286
