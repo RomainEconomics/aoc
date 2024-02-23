@@ -1,4 +1,5 @@
 
+import itertools
 import re
 import pathlib
 
@@ -10,8 +11,7 @@ DATA = DATA_FOLDER / "input.txt"
 
 def read_file(file_path: pathlib.Path):
     with open(file_path) as f:
-        data = f.read().splitlines()
-        return data 
+        return f.read().splitlines() 
 
 neighbours = [(0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1,-1), (-1, 0), (-1, 1)]
 
@@ -50,16 +50,17 @@ print("Part 1: ", answer_test, answer)
 # Part 2
 
 def find_stars(data: list):
-    stars = set()
-    for row_idx in range(len(data)):
-        for col_idx in range(len(data[0])):
-            if data[row_idx][col_idx] == "*":
-                stars.add((row_idx, col_idx))
-    return stars
+    return {
+        (row_idx, col_idx)
+        for row_idx, col_idx in itertools.product(
+            range(len(data)), range(len(data[0]))
+        )
+        if data[row_idx][col_idx] == "*"
+    }
 
 def part2(data_path: pathlib.Path):
     data = read_file(data_path)
-     
+
     stars = find_stars(data)
     output = 0
 
@@ -69,16 +70,16 @@ def part2(data_path: pathlib.Path):
         for row_idx in range(star[0] - 1, star[0] + 2):
             if row_idx < 0 or row_idx >= len(data):
                 continue
-            
+
             star_neighbor_idx = [(star[0] + neighbour[0], star[1] + neighbour[1]) for neighbour in neighbours]
             for match in re.finditer(r"\d+", data[row_idx]):
                 start, end, number = match.start(), match.end(), match.group()
-                num_idx = set((row_idx, col_idx) for col_idx in range(start, end))
+                num_idx = {(row_idx, col_idx) for col_idx in range(start, end)}
                 if any(i in num_idx for i in star_neighbor_idx):
                     adj_num.append(int(number))
         if len(adj_num) == 2:
             output += adj_num[0] * adj_num[1]
-    
+
     return output
 
 
