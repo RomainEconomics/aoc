@@ -1,7 +1,4 @@
-import re
 import pathlib
-from itertools import groupby
-from itertools import permutations
 
 path = pathlib.Path(__file__)
 DATA_FOLDER = path.parent.parent / "data"
@@ -50,8 +47,6 @@ def count(springs: str, nums: tuple):
     return result
 
 
-# part1(DATA_TEST)
-
 # Part 1
 
 
@@ -62,8 +57,6 @@ def part1(data_path: pathlib.Path):
 
     for springs, nums in data:
         nums = tuple(map(int, nums.split(",")))
-
-        print(springs, nums)
 
         arrangements += count(springs, nums)
     return arrangements
